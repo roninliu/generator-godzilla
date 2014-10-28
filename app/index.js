@@ -64,7 +64,7 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
       this.template('_README.md', 'README.md');
       this.template('_gulpfile.js', 'gulpfile.js');
       this.template('_package.json', 'package.json');
-     // this.template('_bower.json', 'bower.json');
+      this.template('_bower.json', 'bower.json');
     },
 
     projectfiles: function () {
