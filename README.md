@@ -16,7 +16,7 @@ npm install -g generator-godzilla
 
 ```bash
 yo godzilla
-
+```
 ## License
 
 MIT
