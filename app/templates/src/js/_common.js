@@ -1,5 +1,6 @@
 (function(){
-'use strict';
+/*jshint quotmark:double*/
+"use strict";
 /**
  *
  *	自定义javascript文件
@@ -7,10 +8,9 @@
  *	Project: <%= projectName%>
  * 	@author: <%= author%>
  *
- *
  */
- 	function(){
- 		console.log('Hi <%= author%>!');
- 		console.log('Welcome to use the  Godzilla generator!');
- 	}
-})()
+ 	
+console.log("Hi <%= author%>!");
+console.log("Welcome to use the  Godzilla generator!");
+
+})();
