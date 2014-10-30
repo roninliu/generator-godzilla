@@ -40,7 +40,6 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
       this.projectName = props.projectName;
       this.author = props.author;
       this.version = props.version;
-      this.someOption = props.someOption;
       done();
     }.bind(this));
   },
@@ -53,9 +52,7 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
       this.dest.mkdir('src/css');
       this.dest.mkdir('src/img');
       this.dest.mkdir("src/js");
-      this.dest.mkdir("src/img/slice");
-
-
+      this.dest.mkdir("src/slice");
 
       this.template('src/_index.html', 'src/index.html');
       this.template('src/css/_style.css', 'src/css/<%= projectName%>.css');
