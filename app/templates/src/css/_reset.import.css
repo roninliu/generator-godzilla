@@ -1,0 +1,86 @@
+@charset "utf-8";
+html{overflow-x: hidden}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td,figure{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset, img{border:0;}
+address, caption, cite, code, dfn, em, strong, th, var, b, i{font-style:normal;font-weight:normal;}
+ol, ul{list-style:none;}
+caption, th{text-align:left;}
+h1, h2, h3, h4, h5, h6{font-size:100%}
+q:before, q:after{content:'';}
+abbr, acronym{border:0;font-variant:normal;}
+sup{vertical-align:text-top;}
+sub{vertical-align:text-bottom;}
+input, textarea, select,button{font-family:inherit;font-size:inherit;font-weight:inherit;}
+input, textarea, select{#font-size:100%;}
+legend{color:#000;}
+
+iframe{overflow:hidden;}/*TT啊,你个2B TT下面才有这个滚动条*/
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {display: block;}
+iframe {border:0;}
+textarea{resize:vertical;overflow-y:auto;}/*resize风险未知,避免布局错乱先写上|auto为了ie下去掉默认侧边*/
+
+body{line-height:1.334;font-size:12px;}
+a{text-decoration:none;}
+a:hover{text-decoration:underline;}
+a div,a strong, a span, a i,a s{#cursor: hand}
+/*
+.os-mac{font-family:"ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3";}
+.os-vista input, .os-vista textarea, .os-vista select, .os-vista button,
+.os-win7 input, .os-win7 textarea, .os-win7 select, .os-win7 button,
+.os-win8 input, .os-win8 textarea, .os-win8 select, .os-win8 button,
+.os-vista, .os-win7, .os-win8{font-family:'微软雅黑'}
+.os-ios{font-family:HelveticaNeue}
+*/
+
+
+
+/* 重置标点字体：逗号，句号，冒号，分号，问号，顿号，省略号，间隔号 */
+@font-face{
+	font-family:punctuation;
+	unicode-range:U+FF0C, U+3002, U+FF1A, U+FF1B, U+FF1F, U+3001, U+2026, U+00B7;
+	src:local(Simhei), local(Simsun);	
+}
+
+/* 重置标点字体：单、双引号“”‘’ */
+@font-face{
+	font-family:punctuation;
+	unicode-range:U+201C-201D, U+2018-2019;
+	src:local(STHeiti), local(Simhei);
+}
+
+/* 重置标点字体：破折号 */
+@font-face{
+	font-family:punctuation;
+	unicode-range:U+2014;
+	src:local("Microsoft Yahei"), local(Simhei);	
+}
+
+/* --------------------------------------------------------------------------
+   修复 Firefox 不支持 unicode-range 导致样式失效的问题
+   -------------------------------------------------------------------------- */
+
+/**
+ * @bug: https://bugzilla.mozilla.org/show_bug.cgi?id=unicode-range
+ * @doc: http://newhtml.net/custom-font-stacks-with-unicode-range/
+ */
+@font-face {
+    font-family:punctuation;
+    src: local('Fix Firefox');
+    unicode-range: U+270C;
+}
+
+/*
+字体调整 by ytzong
+由于V8默认为雅黑，通过class调整字体已无必要
+*/
+body,
+input,
+textarea,
+select,
+button{font-family:punctuation, /* "Hiragino Sans GB", "Helvetica Neue", */微软雅黑,sans-serif}
+
+
+
