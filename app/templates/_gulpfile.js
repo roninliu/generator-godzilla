@@ -2,83 +2,74 @@
 // 引入 gulp
 var gulp = require('gulp');
 // 引入组件
-var jshint = require('gulp-jshint');//js检查
 var concat = require('gulp-concat');//合并文件
-var uglify = require('gulp-uglify');//js压缩
 var rename = require('gulp-rename');//重命名文件
-var mincss = require("gulp-minify-css");//压缩css
-var del = require('del');//清理build文件夹内容
-//var minhtml = require("gulp-htmlmin");//压缩html
+var del = require('del');//删除文件
+var gutil = require('gulp-util');//gulp工具类
+var jshint = require('gulp-jshint');//js检查
+var uglify = require('gulp-uglify');//js压缩
+var csslint = require('gulp-csslint');//css检查
+var cssmin = require("gulp-minify-css");//压缩css
+var htmlmin = require('gulp-prettify');
 
-var paths={
-  scripts:"./src/js/*.js",
-  images:"./src/img/*",
-  slice:"./src/slice/*",
-  css:"./src/css/*.css",
-  html:"./src/*.html",
-  buildHtml:"./build/*.html",
-  buildCSS:"./build/css/*.css",
-  buildImages:"./build/img/*",
-  buildSlice:"./build/slice/*",
-  buildScript:"./build/js/*.js"
-}
-//清理build文件夹，防止重复文件生成
-gulp.task("cleanCSS",function(cb){
-  del([paths.buildCSS],cb)
-});
-gulp.task("cleanHTML",function(cb){
-  del([paths.buildHtml],cb)
-});
-gulp.task("cleanImages",function(cb){
-  del([paths.buildImages],cb)
-});
-gulp.task("cleanSlice",function(cb){
-  del([paths.buildSlice],cb)
-});
-gulp.task("cleanScript",function(cb){
-  del([paths.buildScript],cb)
-});
 
-// 检查脚本
-gulp.task('lint',function() {
-  return gulp.src(paths.scripts)
+//清理build文件夹目录，防止重复文件生成
+gulp.task("clean",function(cb){
+  del(["./build/"],cb)
+})
+
+//检查javascript脚本，合并脚本
+gulp.task("scripts",["clean"],function(){
+  return gulp.src("./src/js/*.js")
         .pipe(jshint())
-        .pipe(jshint.reporter('default'));
-});
-// 合并，压缩js文件
-gulp.task('scripts',["cleanScript"],function() {
-  return gulp.src(paths.scripts)
-        .pipe(concat('all.js'))
+        .pipe(jshint.reporter('default'))
+        .pipe(concat('main.js'))
         .pipe(rename("<%= projectName%>.js"))
         .pipe(uglify())
         .pipe(gulp.dest('./build/js'));
-});
-
-//合并，压缩css文件
-gulp.task("styles",["cleanCSS"],function(){
-  return gulp.src(paths.css)
-        .pipe(mincss({keepBreaks:false}))
-        .pipe(gulp.dest("./build/css"));
 })
+//检查css样式表，压缩css样式表
+var cssReporter = function(files){
+  gutil.log("[CSSLint Error]"+
+      gutil.colors.cyan(files.csslint.errorCount)
+      + " error in " + gutil.colors.magenta(files.path));
+  files.csslint.results.forEach(function(result){
+    gutil.log(result.error.message + "on line "+ result.error.line);
+  })
+}
+gulp.task("css",["clean"],function(){
+  return gulp.src("./src/css/*.css")
+         .pipe(csslint())
+         .pipe(csslint.reporter(cssReporter))
+         .pipe(concat("main.css"))
+         .pipe(rename("<%=projectName%>.css"))
+         .pipe(cssmin({keepBreaks:false}))
+         .pipe(csslint())
+         .pipe(csslint.reporter(cssReporter))
+         .pipe(gulp.dest("./build/css"));
+})
+
 //处理html
-gulp.task("htmls",["cleanHTML"],function(){
-  return gulp.src(paths.html)
+gulp.task("html",["clean"],function(){
+  return gulp.src("./src/*.html")
+        .pipe(htmlmin({indent_size: 2}))
         .pipe(gulp.dest('./build/'));
 })
 //处理图片
-gulp.task("images",["cleanImages"],function(){
-  return gulp.src(paths.images)
+gulp.task("images",["clean"],function(){
+  return gulp.src("./src/img/*")
          .pipe(gulp.dest('./build/img'));
 })
+
 //观察者模式
 gulp.task("watch",function(){
-  gulp.watch(paths.scripts,["lint"]);
-  gulp.watch(paths.scripts,["scripts"]);
-  gulp.watch(paths.css,["styles"]);
-  gulp.watch(paths.html,["htmls"]);
-  gulp.watch(paths.images,["images"]);
+  gulp.watch("./src/js/*.js",["scripts"]);
+  gulp.watch("./src/css/*.css",["css"]);
+  gulp.watch("./src/*.html",["html"]);
+  gulp.watch("./src/img/*",["images"]);
 })
 // 默认任务
-gulp.task('default',["watch","lint","scripts","styles","htmls","images"],function(cb){
-  console.log("[Godzilla INFO] : Done ---- <%=projectName%> project has been compiled!")
+gulp.task('default',["watch","scripts","css","html","images"],function(cb){
+  gutil.log("[Godzilla INFO] :")
+  gutil.log("Done ---- <%=projectName%> all task has been compiled!")
 });
