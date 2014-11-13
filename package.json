@@ -1,7 +1,7 @@
 {
   "name": "generator-godzilla",
-  "version": "1.0.2",
-  "description": "Yeoman generator",
+  "version": "1.0.3",
+  "description": "godzilla is to help front-end engineers to quickly construct the project engineering tool generates based yeoman",
   "license": [
     {
       "type": "MIT",
