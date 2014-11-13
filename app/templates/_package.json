@@ -12,8 +12,9 @@
  	  "gulp-rename":"^1.2.0",
  	  "gulp-minify-css":"^0.3.11",
     "del":"^0.1.3",
-    "gulp-csslint":"^0.1.5",
     "gulp-util":"^3.0.1",
-    "gulp-prettify":"^0.3.0"
+    "gulp-spriter":"^1.0.0",
+    "gulp-mutuo":"^1.0.0",
+    "gm":"^1.17.0"
   }
 }

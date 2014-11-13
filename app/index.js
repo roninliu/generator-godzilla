@@ -16,8 +16,8 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
     var done = this.async();
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to use the  Godzilla generator!'
-    ));
+      'Welcome to use project build tools of the Godzilla Generator!\n Support By Roninliu'
+    ),{maxLength:100});
     var prompts = [
       {
         type:"input",
@@ -38,23 +38,20 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
         default:"0.0.1"
       },
       {
-        type:"rawlist",
+        type:"list",
         name:"category",
         message:"Please select the type you want to create a template?",
-        choices:["QZone act for PC","QZone act for Mobile","Nomarl"],
+        choices:[
+          "1.PC Template",
+          "2.Mobile Template",
+          "3.Blank Template"
+        ],
         filter:function(val){
-          var type = 0;
-          var select = val.toLowerCase().replace(/\s+/g,"");
-          switch(select){
-            case "qzoneactforpc":
-              return 1;
-            break;
-            case "qzoneactformobile":
-              return 2;
-            break;
-            default:
-              return 3;
+          var type = parseInt(val.slice(0, val.indexOf(".")).toLowerCase().replace(/\s+/g,""));
+          if(isNaN(type)){
+            type = 1;
           }
+          return type;
         }
       }
     ];
@@ -70,13 +67,12 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
-      this.dest.mkdir('src');
-      this.dest.mkdir('build');
-      this.dest.mkdir('test');
-      this.dest.mkdir('src/css');
-      this.dest.mkdir('src/img');
-      this.dest.mkdir("src/js");
-      this.dest.mkdir("src/slice");
+      this.dest.mkdir('src',0777);
+      this.dest.mkdir('dist',0777);
+      this.dest.mkdir('src/css',0777);
+      this.dest.mkdir('src/img',0777);
+      this.dest.mkdir("src/js",0777);
+      this.dest.mkdir("src/slice",0777);
       switch(this.category){
         case 1:
           this.template('src/_index_1.html', 'src/index.html');
@@ -101,8 +97,8 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
     },
 
     projectfiles: function () {
-      this.src.copy('editorconfig', '.editorconfig');
-      this.src.copy('jshintrc', '.jshintrc');
+      //this.src.copy('editorconfig', '.editorconfig');
+      //this.src.copy('jshintrc', '.jshintrc');
     }
   },
 
