@@ -1,8 +1,13 @@
 {
   "name": "generator-godzilla",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Yeoman generator",
-  "license": "MIT",
+  "license": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/roninliu/generator-godzilla/blob/master/LICENSE-MIT"
+    }
+  ],
   "main": "app/index.js",
   "repository": "roninliu/generator-godzilla",
   "author": {
