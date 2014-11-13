@@ -67,12 +67,12 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
-      this.dest.mkdir('src',0777);
-      this.dest.mkdir('dist',0777);
-      this.dest.mkdir('src/css',0777);
-      this.dest.mkdir('src/img',0777);
-      this.dest.mkdir("src/js",0777);
-      this.dest.mkdir("src/slice",0777);
+      this.dest.mkdir('src');
+      this.dest.mkdir('dist');
+      this.dest.mkdir('src/css');
+      this.dest.mkdir('src/img');
+      this.dest.mkdir("src/js");
+      this.dest.mkdir("src/slice");
       switch(this.category){
         case 1:
           this.template('src/_index_1.html', 'src/index.html');
