@@ -43,7 +43,7 @@ gulp.task("css",["slice"],function(){
          .pipe(sprite({
            outname:"<%= projectName%>.png",
            inpath:"./src/slice",
-           outpath:"./dist/sprite"
+           outpath:"./src/sprite"
          }))
          .pipe(cssmin({keepBreaks:false}))
          .pipe(gulp.dest("./dist/css"));
@@ -53,7 +53,11 @@ gulp.task("html",function(){
   return gulp.src("./src/*.html")
         .pipe(gulp.dest("./dist/"));
 })
-
+//处理雪碧图压缩
+gulp.task("sprite",["css"],function(){
+  return gulp.src("./src/sprite/*")
+        .pipe(imageisux("../../dist/sprite"))
+})
 //处理图片
 gulp.task("images",function(){
   return gulp.src("./src/img/*")
@@ -68,7 +72,7 @@ gulp.task("watch",function(){
   gulp.watch("./src/img/*",["images"]);
 })
 // 默认任务
-gulp.task("default",["clean","watch","scripts","css","html","images"],function(cb){
+gulp.task("default",["clean","watch","scripts","css","html","images","sprite"],function(cb){
   gutil.log(
     gutil.colors.green("[Godzilla]"),
     gutil.colors.yellow("[DONE]:All Task has been compiled of the <%= projectName%> project!")
