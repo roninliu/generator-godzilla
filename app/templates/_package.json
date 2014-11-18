@@ -16,6 +16,7 @@
     "gulp-spriter":"^1.0.0",
     "gulp-mutuo":"^1.0.0",
     "gm":"^1.17.0",
-    "gulp-imageisux":"^1.0.2"
+    "gulp-imageisux":"^1.0.2",
+    "gulp-iftp":"^1.0.0"
   }
 }

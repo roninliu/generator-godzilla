@@ -12,6 +12,7 @@ var cssmin = require("gulp-minify-css");//压缩css
 var mutuo = require("gulp-mutuo");//转化@2x图工具
 var sprite = require("gulp-spriter");//雪碧图工具
 var imageisux = require("gulp-imageisux")//智图压缩
+var ftp = require("gulp-iftp");//部署任务
 
 
 //清理dist文件夹目录，防止重复文件生成
@@ -71,6 +72,22 @@ gulp.task("watch",function(){
   gulp.watch("./src/*.html",["html"]);
   gulp.watch("./src/img/*",["images"]);
 })
+//发布体验环境任务
+gulp.task("publish",function(){
+  gulp.src("./dist/*")
+        .pipe(ftp({
+          host:"xx",
+          port:"xx",
+          user:"xx",
+          pass:"xx",
+          logger:"logger.txt",
+          froot:"/usr/local/imgcache/htdocs",
+          remote:"xx",
+          exp:"xx",
+          pro:"xx"
+        }))
+})
+
 // 默认任务
 gulp.task("default",["clean","watch","scripts","css","html","images","sprite"],function(cb){
   gutil.log(
