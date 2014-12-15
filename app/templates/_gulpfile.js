@@ -32,7 +32,7 @@ gulp.task("cover",function(){
         .pipe(mutuo());
 })
 //处理css文件，合并雪碧图
-gulp.task("css",["cover"],function(){
+gulp.task("css",function(){
   del.sync(["./dist/css","./src/sprite","./dist/sprite"]);
   return gulp.src("./src/css/*.css")
          .pipe(concat("main.css"))
@@ -52,7 +52,7 @@ gulp.task("html",function(){
         .pipe(gulp.dest("./dist/"));
 })
 //图片压缩
-gulp.task("image",["css"],function(){
+gulp.task("image",function(){
   del.sync(["./dist/sprite","./dist/img"]);
   gulp.src("./src/sprite/*")
       .pipe(imageisux("../../dist/sprite"));
@@ -63,11 +63,11 @@ gulp.task("image",["css"],function(){
 gulp.task("watch",function(){
   gulp.watch("./src/js/*.js",["script"]);
   gulp.watch("./src/css/*.css",["css"]);
+  gulp.watch("./src/slice/*.png",["cover"]);
   gulp.watch("./src/*.html",["html"]);
-  gulp.watch("./src/img/*",["image"]);
 })
 //发布体验环境任务
-gulp.task("publish",function(){
+gulp.task("dev",function(){
   gulp.src("./dist/index.html")
         .pipe(ftp({
           host:"xx",
@@ -84,7 +84,7 @@ gulp.task("publish",function(){
 
 
 // 默认任务
-gulp.task("default",["watch","cover","html","script"],function(){
+gulp.task("default",["css","image","html","script"],function(){
   gutil.log(
     gutil.colors.green("[Godzilla]"),
     gutil.colors.yellow("[DONE]:All Task has been compiled of the <%= projectName%> project!")

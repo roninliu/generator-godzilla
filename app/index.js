@@ -16,14 +16,14 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
     var done = this.async();
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to use project build tools of the Godzilla Generator!\n Support By Roninliu'
+      'Welcome to use project build tools of the Godzilla Generator 1.1.1!\n Support By Roninliu'
     ),{maxLength:100});
     var prompts = [
       {
         type:"input",
         name:"projectName",
         message:"Please enter your project name?",
-        default:this.appname
+        default:this.appname.replace(/\s+/g,"-")
       },
       {
         type:"input",
@@ -93,7 +93,7 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
       this.template('_README.md', 'README.md');
       this.template('_gulpfile.js', 'gulpfile.js');
       this.template('_package.json', 'package.json');
-      this.template('_bower.json', 'bower.json');
+      //this.template('_bower.json', 'bower.json');
     },
 
     projectfiles: function () {
