@@ -1,6 +1,6 @@
 {
   "name": "generator-godzilla",
-  "version": "1.0.9",
+  "version": "1.1.1",
   "description": "godzilla is to help front-end engineers to quickly construct the project engineering tool generates based yeoman",
   "license": [
     {
@@ -9,7 +9,10 @@
     }
   ],
   "main": "app/index.js",
-  "repository": "roninliu/generator-godzilla",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roninliu/generator-godzilla"
+  },
   "author": {
     "name": "ronin",
     "email": "roninliu@foxmail.com",
@@ -37,5 +40,15 @@
   },
   "peerDependencies": {
     "yo": ">=1.0.0"
-  }
+  },
+  "readme": "# Generator Godzilla\r\n\r\n### 简介\r\ngodzilla是帮助前端工程师快速构将项目工程的工具，基于yeoman生成\r\n\r\n### 环境搭建\r\n* 安装yeoman\r\n\r\n```bash\r\nnpm install -g yo\r\n```\r\n\r\n* 安装godzilla模块\r\n\r\n```bash\r\nnpm install -g generator-godzilla\r\n```\r\n\r\n### 使用方式：\r\n* 创建项目的文件夹，如：godzillatest\r\n* 命令行定位到 cd godzillatest\r\n* 运行下面的命令\r\n```bash\r\nyo godzilla\r\n```\r\n工具将自动生成对应的项目文件以及各种工具（包含：css压缩，css合并，自动生成雪碧图，自动转换@2x图片为@1x图片，js压缩，js合并，智图压缩图片）\r\n\r\n### License\r\n\r\nMIT\r\n",
+  "readmeFilename": "README.md",
+  "gitHead": "2b28f2dcfc90d114d4489805771dce0268077c89",
+  "bugs": {
+    "url": "https://github.com/roninliu/generator-godzilla/issues"
+  },
+  "homepage": "https://github.com/roninliu/generator-godzilla",
+  "_id": "generator-godzilla@1.1.1",
+  "_shasum": "c2fc13c5b9224a55611b39f2ad2ee151f845eee2",
+  "_from": "generator-godzilla@"
 }
