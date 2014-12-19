@@ -14,60 +14,81 @@ var sprite = require("gulp-spriter");//雪碧图工具
 var imageisux = require("gulp-imageisux")//智图压缩
 var ftp = require("gulp-iftp");//部署任务
 
-
+//清理依赖环境
+gulp.task("clean",function(){
+  del.sync("./debug/*");
+  del.sync("./dist/*")
+})
 //检查javascript脚本，合并脚本
-gulp.task("script",function(){
-  del.sync("./dist/js")
-  return gulp.src("./src/js/*.js")
+gulp.task("js",function(){
+  return gulp.src(["./src/js/*.js"])
         .pipe(jshint())
-        .pipe(jshint.reporter("default"))
+        .pipe(jshint.reporter("jshint-stylish"))
         .pipe(concat("main.js"))
         .pipe(rename("<%= projectName%>.js"))
         .pipe(uglify())
-        .pipe(gulp.dest("./dist/js"));
+        .pipe(gulp.dest("./debug/js"));
 })
 //处理@2x图片为@1x图片
 gulp.task("cover",function(){
-  return gulp.src(["./src/img/*","./src/slice/*"])
+  return gulp.src(["./src/img/*","./src/img/slice/*"])
         .pipe(mutuo());
+})
+//处理html
+gulp.task("html",function(){
+  return gulp.src(["./src/*.html"])
+        .pipe(gulp.dest("./debug/"));
 })
 //处理css文件，合并雪碧图
 gulp.task("css",function(){
-  del.sync(["./dist/css","./src/sprite","./dist/sprite"]);
   return gulp.src("./src/css/*.css")
          .pipe(concat("main.css"))
          .pipe(rename("<%= projectName%>.css"))
          .pipe(sprite({
            outname:"<%= projectName%>.png",
-           inpath:"./src/slice",
-           outpath:"./src/sprite"
+           inpath:"./src/img/slice",
+           outpath:"./debug/img/sprite"
          }))
          .pipe(cssmin({keepBreaks:false}))
-         .pipe(gulp.dest("./dist/css"));
+         .pipe(gulp.dest("./debug/css"));
 })
-//处理html
-gulp.task("html",function(){
-  del.sync("./dist/*.html");
-  return gulp.src("./src/*.html")
-        .pipe(gulp.dest("./dist/"));
+//压缩图片，同步图片到debug环境
+gulp.task("img",function(){
+  return gulp.src(["./src/img/*.png","./src/img/*.jpg","!./src/img/sprite/*"])
+        .pipe(imageisux("../../debug/img"))
 })
-//图片压缩
-gulp.task("image",function(){
-  del.sync(["./dist/sprite","./dist/img"]);
-  gulp.src("./src/sprite/*")
-      .pipe(imageisux("../../dist/sprite"));
-  gulp.src("./src/img/*")
-      .pipe(imageisux("../../dist/img"))
+//压缩雪碧图，同步到dist环境
+gulp.task("sprite",function(){
+  return gulp.src(["./debug/img/sprite/*.png"])
+        .pipe(imageisux("../../../dist/img/sprite"))
 })
 //观察者模式
 gulp.task("watch",function(){
-  gulp.watch("./src/js/*.js",["script"]);
+  gulp.watch("./src/js/*.js",["js"]);
   gulp.watch("./src/css/*.css",["css"]);
-  gulp.watch("./src/slice/*.png",["cover"]);
   gulp.watch("./src/*.html",["html"]);
 })
+
+//发布debug环境
+gulp.task("debug",["clean"],function(){
+  gulp.start(["html","css","img","js"]);
+})
+//发布dist环境。准备上传使用
+gulp.task("dist",function(){
+  gulp.start(["sprite"]);
+  gulp.src("./debug/*")
+  .pipe(gulp.dest("./dist"));
+  gulp.src("./debug/css/*")
+  .pipe(gulp.dest("./dist/css"));
+  gulp.src("./debug/js/*")
+  .pipe(gulp.dest("./dist/js"));
+  gulp.src("./debug/img/*")
+  .pipe(gulp.dest("./dist/img"));
+  gulp.src("./debug/img/sprite/*")
+  .pipe(gulp.dest("./dist/img/sprite"));
+});
 //发布体验环境任务
-gulp.task("dev",function(){
+gulp.task("upload",function(){
   gulp.src("./dist/index.html")
         .pipe(ftp({
           host:"xx",
@@ -81,12 +102,30 @@ gulp.task("dev",function(){
           pro:"xx"
         }))
 })
-
-
 // 默认任务
-gulp.task("default",["css","image","html","script"],function(){
+gulp.task("default",function(){
   gutil.log(
-    gutil.colors.green("[Godzilla]"),
-    gutil.colors.yellow("[DONE]:All Task has been compiled of the <%= projectName%> project!")
+    gutil.colors.green("[Info]:"),
+    gutil.colors.yellow("When your completed code, execute following command:")
+  );
+  gutil.log(
+    gutil.colors.green("[Step 1]:"),
+    gutil.colors.yellow("gulp cover")
   )
+   gutil.log(
+    gutil.colors.green("[Step 2]:"),
+    gutil.colors.yellow("gulp debug")
+  )
+  gutil.log(
+    gutil.colors.green("[Step 3]:"),
+    gutil.colors.yellow("gulp dist")
+  )
+  gutil.log(
+    gutil.colors.green("[Step 4]:"),
+    gutil.colors.yellow("gulp upload")
+  )
+  gutil.log(
+    gutil.colors.green("[Info]:"),
+    gutil.colors.yellow("If any error, plase try again!")
+  );
 });
