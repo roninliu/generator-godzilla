@@ -8,6 +8,6 @@
  *
  *
  */
-@import url("reset.import.css");
+@import url("<%= projectName%>.import.css");
 
 body{background-color: #fff;}

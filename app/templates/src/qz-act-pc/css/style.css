@@ -1,0 +1,11 @@
+@charset "utf-8";
+/**
+ *
+ *	CSS Document
+ * 	Copy Right: Tencent ISUX
+ *	Project: <%= projectName%>
+ * 	@author: <%= author%>
+ *
+ *
+ */
+body{background-color: #fff;}

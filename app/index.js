@@ -1,22 +1,35 @@
 'use strict';
-var util = require('util');
-var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 
-
-
+var _templates = [];//存放模版列表key
+var _templatesPaths = [];//模版数据
 
 var GodzillaGenerator = yeoman.generators.Base.extend({
+  //初始化文件，获取模版列表
   initializing: function () {
     this.pkg = require('../package.json');
+    this.config = this.fs.readJSON(this.templatePath("src/config.json"));
+    if(this.config != null){
+      var _templatesList = this.config.package;
+      for(var i=0;i<_templatesList.length;i++){
+        var _tmpPackage = _templatesList[i];
+        var indexKey = i + 1;
+        var _tmpKey = indexKey +"."+ _tmpPackage.name;
+        var _tmpObject = {
+          index:indexKey,
+          path:_tmpPackage
+        }
+        _templates.push(_tmpKey);
+        _templatesPaths.push(_tmpObject);
+      }
+    }
   },
-
+  //相关用户参数
   prompting: function () {
     var done = this.async();
-    // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to use project build tools of the Godzilla Generator 1.1.1!\n Support By Roninliu'
+      'Welcome to use Godzilla Project build tools!\n Support By Roninliu\r version 1.1.2'
     ),{maxLength:100});
     var prompts = [
       {
@@ -32,20 +45,16 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
         default:"Godzilla"
       },
       {
-        type:"input",
-        name:"version",
-        message:"Please enter your project version?",
-        default:"0.0.1"
+        type:"confirm",
+        name:"gulpenable",
+        message:"Enable gulp.js compiled file",
+        default:true
       },
       {
         type:"list",
         name:"category",
         message:"Please select the type you want to create a template?",
-        choices:[
-          "1.PC Template",
-          "2.Mobile Template",
-          "3.Blank Template"
-        ],
+        choices:_templates,
         filter:function(val){
           var type = parseInt(val.slice(0, val.indexOf(".")).toLowerCase().replace(/\s+/g,""));
           if(isNaN(type)){
@@ -55,55 +64,77 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
         }
       }
     ];
-
     this.prompt(prompts, function (props) {
       this.projectName = props.projectName;
       this.author = props.author;
-      this.version = props.version;
+      this.version = "0.1.0";
       this.category = props.category;
+      this.gulpenable = props.gulpenable;
       done();
     }.bind(this));
   },
-
+  //写入文件
   writing: {
     app: function () {
-      this.dest.mkdir('src');
-      this.dest.mkdir('dist');
-      this.dest.mkdir('src/css');
-      this.dest.mkdir('src/img');
-      this.dest.mkdir("src/js");
-      this.dest.mkdir("src/slice");
-      switch(this.category){
-        case 1:
-          this.template('src/_index_1.html', 'src/index.html');
-          this.template('src/css/_style.css', 'src/css/<%= projectName%>.css');
-          this.template('src/js/_common.js', 'src/js/<%= projectName%>.js');
-        break;
-        case 2:
-          this.template('src/_index_2.html', 'src/index.html');
-          this.template('src/css/_style.css', 'src/css/<%= projectName%>.css');
-          this.template('src/js/_common.js', 'src/js/<%= projectName%>.js');
-        break
-        default:
-          this.template('src/_index_3.html', 'src/index.html');
-          this.template('src/css/_style_3.css', 'src/css/<%= projectName%>.css');
-          this.template('src/css/_reset.import.css', 'src/css/reset.import.css');
-          this.template('src/js/_common.js', 'src/js/<%= projectName%>.js');
+      if(this.gulpenable){
+        this.dest.mkdir("src");//开发目录
+        this.dest.mkdir("debug");//debug目录
+        this.dest.mkdir("dist");//正式目录
+        this.template('_gulpfile.js', 'gulpfile.js');
+        this.template('_package.json', 'package.json');
+        for(var i=0;i<_templatesPaths.length;i++){
+          if(this.category == _templatesPaths[i].index){
+            var _currentTemplate = _templatesPaths[i].path.path;
+            for(var j=0;j<_currentTemplate.length;j++){
+              var file = _currentTemplate[j];
+              var local = file.slice(file.indexOf("/")+1,file.length);
+              if(local.indexOf(".") < 0){
+                this.dest.mkdir("src/"+local);
+              }else{
+                if(local.indexOf(".html") > -1){
+                  this.template(this.templatePath("src/"+ file), this.destinationPath("src/"+local));
+                }else{
+                  var regx = local.slice(local.lastIndexOf("/")+1,local.indexOf("."));
+                  var outfile = local.replace(regx,this.projectName);
+                  this.template(this.templatePath("src/"+ file), this.destinationPath("src/"+outfile));
+                }
+              }
+            }
+          }
+        }
+      }else{
+        for(var i=0;i<_templatesPaths.length;i++){
+          if(this.category == _templatesPaths[i].index){
+            var _currentTemplate = _templatesPaths[i].path.path;
+            for(var j=0;j<_currentTemplate.length;j++){
+              var file = _currentTemplate[j];
+              var local = file.slice(file.indexOf("/")+1,file.length);
+              if(local.indexOf(".") < 0){
+                this.dest.mkdir(local);
+              }else{
+                if(local.indexOf(".html") > -1){
+                  this.template(this.templatePath("src/"+ file), this.destinationPath(local));
+                }else{
+                  var regx = local.slice(local.lastIndexOf("/")+1,local.indexOf("."));
+                  var outfile = local.replace(regx,this.projectName);
+                  this.template(this.templatePath("src/"+ file), this.destinationPath(outfile));
+                }
+              }
+            }
+          }
+        }
       }
-      this.template('_README.md', 'README.md');
-      this.template('_gulpfile.js', 'gulpfile.js');
-      this.template('_package.json', 'package.json');
-      //this.template('_bower.json', 'bower.json');
     },
-
-    projectfiles: function () {
-      //this.src.copy('editorconfig', '.editorconfig');
-      //this.src.copy('jshintrc', '.jshintrc');
-    }
+    projectfiles: function () {}
   },
 
-  end: function () {
-    this.installDependencies();
+  install: function () {
+    if(this.gulpenable){
+      this.installDependencies({
+         skipInstall: this.options['skip-install'],
+         bower:false
+      });
+    }
   }
 });
 
