@@ -1,0 +1,24 @@
+html, body{font-size: 62.5%;}
+section,article,aside,header,footer,nav,figure{display:block}
+body,h1,h2,h3,h4,h5,h6,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td,figure{margin:0;padding:0}
+button,input,select,textarea{font:1.2rem/1.5 arial}
+h1,h2,h3,h4,h5,h6,button,input,select,textarea{font-size:100%}
+address,cite,dfn,em,var{font-style:normal}
+code,kbd,pre,samp{font-family:courier new,courier,monospace}
+small{font-size:12px}
+ul,ol{list-style:none}
+a{text-decoration:none}
+a:hover{text-decoration:none}
+sup{vertical-align:text-top}
+sub{vertical-align:text-bottom}
+legend{color:#000}
+fieldset,img{border:0}
+table{border-collapse:collapse;border-spacing:0}
+input::-moz-focus-inner,button::-moz-focus-inner{border:0;padding:0;outline:0}
+input[type='text']:focus,input[type='password']:focus{outline:0}
+::-webkit-file-upload-button{cursor:pointer}
+.clear{*zoom:1}
+.clear:after{content:'\20';display:block;clear:both;height:0}
+body .hide{display:none !important;}
+body{font-family:Arial,Helvetica,"\5FAE\8F6F\96C5\9ED1";}
+a{color:#4a8ce3;-webkit-tap-highlight-color:transparent;}

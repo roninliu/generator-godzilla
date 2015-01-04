@@ -29,7 +29,7 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
     this.log(yosay(
-      'Welcome to use Godzilla Project build tools!\n Support By Roninliu\r version 1.1.2'
+      'Welcome to use Godzilla Project build tools!\n Support By Roninliu\r version 1.1.3'
     ),{maxLength:100});
     var prompts = [
       {
@@ -91,13 +91,7 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
               if(local.indexOf(".") < 0){
                 this.dest.mkdir("src/"+local);
               }else{
-                if(local.indexOf(".html") > -1){
-                  this.template(this.templatePath("src/"+ file), this.destinationPath("src/"+local));
-                }else{
-                  var regx = local.slice(local.lastIndexOf("/")+1,local.indexOf("."));
-                  var outfile = local.replace(regx,this.projectName);
-                  this.template(this.templatePath("src/"+ file), this.destinationPath("src/"+outfile));
-                }
+                this.template(this.templatePath("src/"+ file), this.destinationPath("src/"+local));
               }
             }
           }
@@ -112,13 +106,7 @@ var GodzillaGenerator = yeoman.generators.Base.extend({
               if(local.indexOf(".") < 0){
                 this.dest.mkdir(local);
               }else{
-                if(local.indexOf(".html") > -1){
-                  this.template(this.templatePath("src/"+ file), this.destinationPath(local));
-                }else{
-                  var regx = local.slice(local.lastIndexOf("/")+1,local.indexOf("."));
-                  var outfile = local.replace(regx,this.projectName);
-                  this.template(this.templatePath("src/"+ file), this.destinationPath(outfile));
-                }
+                this.template(this.templatePath("src/"+ file), this.destinationPath(local));
               }
             }
           }

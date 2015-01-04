@@ -1,51 +1,71 @@
 {
-	"package":
-	[
-		{
-			"name":"qz-act-pc",
-			"author":"营收项目组",
-			"desc":"营收组PC活动模版",
-			"maintain":"roninliu",
-			"path":[
-				"qz-act-pc/css",
-				"qz-act-pc/img",
-				"qz-act-pc/js",
-				"qz-act-pc/img/slice",
-				"qz-act-pc/index.html",
-				"qz-act-pc/css/style.css",
-				"qz-act-pc/js/common.js"
-			]
-		},
-		{
-			"name":"qz-act-mobile",
-			"author":"营收项目组",
-			"desc":"营收组移动端活动模版",
-			"maintain":"roninliu",
-			"path":[
-				"qz-act-mobile/css",
-				"qz-act-mobile/img",
-				"qz-act-mobile/js",
-				"qz-act-mobile/img/slice",
-				"qz-act-mobile/index.html",
-				"qz-act-mobile/css/style.css",
-				"qz-act-mobile/js/common.js"
-			]
-		},
-		{
-			"name":"blank-template",
-			"author":"营收项目组",
-			"desc":"空白模版",
-			"maintain":"roninliu",
-			"path":[
-				"blank-template/index.html",
-				"blank-template/js/common.js",
-				"blank-template/css/style.css",
-				"blank-template/css/reset.import.css",
-				"blank-template/js",
-				"blank-template/css",
-				"blank-template/img",
-				"blank-template/img/slice"
-			]
-		}
-	]
+  "package": [
+    {
+      "name": "qz-act-pc",
+      "author": "营收项目组",
+      "desc": "营收组PC活动模版",
+      "maintain": "roninliu",
+      "path": [
+        "qz-act-pc/css",
+        "qz-act-pc/img",
+        "qz-act-pc/js",
+        "qz-act-pc/img/slice",
+        "qz-act-pc/index.html",
+        "qz-act-pc/css/style.css",
+        "qz-act-pc/js/common.js"
+      ]
+    },
+    {
+      "name": "qz-act-mobile",
+      "author": "营收项目组",
+      "desc": "营收组移动端活动模版",
+      "maintain": "roninliu",
+      "path": [
+        "qz-act-mobile/css",
+        "qz-act-mobile/img",
+        "qz-act-mobile/js",
+        "qz-act-mobile/img/slice",
+        "qz-act-mobile/index.html",
+        "qz-act-mobile/css/style.css",
+        "qz-act-mobile/js/common.js"
+      ]
+    },
+    {
+      "name": "blank-template",
+      "author": "营收项目组",
+      "desc": "空白模版",
+      "maintain": "roninliu",
+      "path": [
+        "blank-template/index.html",
+        "blank-template/js/common.js",
+        "blank-template/css/style.css",
+        "blank-template/css/reset.import.css",
+        "blank-template/js",
+        "blank-template/css",
+        "blank-template/img",
+        "blank-template/img/slice"
+      ]
+    },
+    {
+      "name": "wy-share-mobile",
+      "author": "",
+      "desc": "微云分享页面移动端模板",
+      "maintain": "kiddhe",
+      "path": [
+        "wy-share-mobile/css",
+        "wy-share-mobile/img",
+        "wy-share-mobile/js",
+        "wy-share-mobile/sass",
+        "wy-share-mobile/index.html",
+        "wy-share-mobile/img/slice",
+        "wy-share-mobile/sass/component.sass",
+        "wy-share-mobile/sass/functions.sass",
+        "wy-share-mobile/sass/classes.sass",
+        "wy-share-mobile/sass/variables.sass",
+        "wy-share-mobile/css/reset.import.css",
+        "wy-share-mobile/css/style.css",
+        "wy-share-mobile/js/common.js"
+      ]
+    }
+  ]
 }

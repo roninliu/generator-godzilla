@@ -1,0 +1,34 @@
+/* @ Usage: With prefix styles
+ * @ Author: Kidd He
+ * @ Contact: kiddhe # tencent.com
+ */
+
+@mixin box-sizing($box-name)
+  -webkit-box-sizing:border-box
+    -moz-box-sizing:border-box
+         box-sizing:border-box
+
+@mixin scaleX($ratio)
+  -webkit-transform: scaleY($ratio)
+  -ms-transform: scaleY($ratio)
+  -o-transform: scaleY($ratio)
+  transform: scaleY($ratio)
+
+@mixin scaleY($ratio)
+  -webkit-transform: scaleX($ratio)
+  -ms-transform: scaleX($ratio)
+  -o-transform: scaleX($ratio)
+  transform: scaleX($ratio)
+
+@mixin scale($ratio)
+  -webkit-transform: scale($ratio)
+  -ms-transform: scale($ratio)
+  -o-transform: scale($ratio)
+  transform: scale($ratio)
+
+@mixin transform-origin($x, $y)
+  -webkit-transform-origin: $x $y
+  -moz-transform-origin: $x $y
+  -ms-transform-origin: $x $y
+  -o-transform-origin: $x $y
+  transform-origin: $x $y
